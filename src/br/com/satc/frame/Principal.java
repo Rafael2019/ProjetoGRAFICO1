@@ -6,7 +6,9 @@
 package br.com.satc.frame;
 
 import br.com.satc.objetos.Aluno;
+import br.com.satc.objetos.Nota;
 import br.com.satc.objetos.TipoAvaliacao;
+import com.sun.org.apache.xml.internal.serialize.Method;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -16,8 +18,8 @@ import javax.swing.JOptionPane;
  * @author SATC
  */
 public class Principal extends javax.swing.JFrame {
-    
-    
+
+    Aluno a;
 
     /**
      * Creates new form Principal
@@ -283,11 +285,10 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jTFMatriculaActionPerformed
 
     private void jBCalcularNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCalcularNotaActionPerformed
-         
-        
-        
-         
-        String nomeDisciplina = this.jTFNomeDisciplina.getText(); 
+
+        Aluno a = new Aluno(jTFNomeAluno.getText(), Integer.parseInt(jTFMatricula.getText()));
+
+        String nomeDisciplina = this.jTFNomeDisciplina.getText();
         float nota1, nota2, nota3, nota4, media;
         nota1 = Float.parseFloat(this.jTFNota1.getText());
         nota2 = Float.parseFloat(this.jTFNota2.getText());
@@ -295,17 +296,50 @@ public class Principal extends javax.swing.JFrame {
         nota4 = Float.parseFloat(this.jTFNota4.getText());
         media = (nota1 + nota2 + nota3 + nota4) / 4;
 
-        JOptionPane.showMessageDialog(this,"\n Disciplina: "+nomeDisciplina+"\n Média: "+ media);
+        TipoAvaliacao tipo = null;
 
+        switch (jCBTipoAvaliacao.getSelectedIndex()) {
+            case 0:
+
+                tipo = TipoAvaliacao.PROVA;
+
+                break;
+
+            case 1:
+
+                tipo = TipoAvaliacao.TRABALHO;
+                break;
+
+            case 2:
+
+                tipo = TipoAvaliacao.SEMINARIO;
+                break;
+
+        }
+        JOptionPane.showMessageDialog(this, "\n" + a + "\n Disciplina: " + nomeDisciplina + "\n Média: " + media + "\n" + tipo.getNomeAvaliacao());
+
+        a.getNotas().add(new Nota(jTFNomeDisciplina.getText(), tipo, Float.parseFloat(jTFNota1.getText())));
+        a.getNotas().add(new Nota(jTFNomeDisciplina.getText(), tipo, Float.parseFloat(jTFNota2.getText())));
+        a.getNotas().add(new Nota(jTFNomeDisciplina.getText(), tipo, Float.parseFloat(jTFNota3.getText())));
+        a.getNotas().add(new Nota(jTFNomeDisciplina.getText(), tipo, Float.parseFloat(jTFNota4.getText())));
+        
 
     }//GEN-LAST:event_jBCalcularNotaActionPerformed
 
     private void jBCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCadastrarActionPerformed
 
-        String nome;
-        int matricula;
-        nome = this.jTFNomeAluno.getText();
-        matricula = Integer.parseInt(this.jTFMatricula.getText());
+        String nome = jTFNomeAluno.getText();
+        int matricula = 0;
+        try {
+            matricula = Integer.parseInt(this.jTFMatricula.getText());
+
+        } catch (NumberFormatException nfe) {
+
+            JOptionPane.showMessageDialog(this, "Você digitou um caractere invalido");
+            throw new RuntimeException();
+        }
+        a = new Aluno(nome, matricula);
+        JOptionPane.showMessageDialog(this, a.toString());
 
 
     }//GEN-LAST:event_jBCadastrarActionPerformed
@@ -315,9 +349,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jTFNomeDisciplinaActionPerformed
 
     private void jCBTipoAvaliacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTipoAvaliacaoActionPerformed
-            
-       
-        
+
 
     }//GEN-LAST:event_jCBTipoAvaliacaoActionPerformed
 

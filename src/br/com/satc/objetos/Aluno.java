@@ -27,7 +27,7 @@ public class Aluno {
 
     @Override
     public String toString() {
-        return "Aluno{" + "nome=" + nome + ", matricula=" + matricula + ", notas=" + notas + '}';
+        return "Aluno: " + nome + "\n" + "matricula: " + matricula + ' ';
     }
 
     public void setNome(String nome) {

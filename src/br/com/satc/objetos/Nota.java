@@ -20,6 +20,10 @@ public class Nota {
         this.tipoAvaliacao = tipoAvaliacao;
     }
 
+    public Nota(String text, TipoAvaliacao tipo, float nota1) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     @Override
     public String toString() {
         return "Nota{" + "nomeDisciplina=" + nomeDisciplina + ", nota=" + nota + ", tipoAvaliacao=" + tipoAvaliacao + '}';
